@@ -21,7 +21,9 @@ class _LoginPageState extends State<LoginPage> {
     var page;
     if (widget.position == 1) {
       color = Color(0xFFFAF6ED);
-      page = RequesterCSOPage();
+      page = RequesterCSOPage(
+        index: 1,
+      );
     } else if (widget.position == 2) {
       color = Color(0xFFEDF3FA);
       page = DesignatedOfficerPage();
