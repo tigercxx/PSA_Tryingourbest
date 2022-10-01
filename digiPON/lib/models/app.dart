@@ -19,7 +19,9 @@ class App extends ChangeNotifier {
 class PON {
   String serialnumber;
   String requester_id;
+  String designated_id;
   String cso_id;
+  String aetos_id;
 
 //Required Info
   String company_name;
@@ -39,7 +41,9 @@ class PON {
   PON(
       this.serialnumber,
       this.requester_id,
+      this.designated_id,
       this.cso_id,
+      this.aetos_id,
       this.company_name,
       this.vehicle_no,
       this.driver_name,
@@ -58,6 +62,8 @@ List<PON> PONData = [
       '1',
       '1',
       '2',
+      '3',
+      '4',
       'McDonalds',
       'SMU5555',
       'Harry',
@@ -73,6 +79,8 @@ List<PON> PONData = [
       '2',
       '1',
       '2',
+      '3',
+      '4',
       'McDonalds',
       'SMU5555',
       'Harry',
@@ -88,6 +96,8 @@ List<PON> PONData = [
       '3',
       '1',
       '2',
+      '3',
+      '4',
       'McDonalds',
       'SMU5555',
       'Harry',
@@ -103,6 +113,8 @@ List<PON> PONData = [
       '4',
       '1',
       '2',
+      '3',
+      '4',
       'McDonalds',
       'SMU5555',
       'Harry',
@@ -118,6 +130,8 @@ List<PON> PONData = [
       '5',
       '1',
       '2',
+      '3',
+      '4',
       'McDonalds',
       'SMU5555',
       'Harry',
@@ -133,6 +147,8 @@ List<PON> PONData = [
       '6',
       '1',
       '2',
+      '3',
+      '4',
       'McDonalds',
       'SMU5555',
       'Harry',

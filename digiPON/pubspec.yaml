@@ -36,6 +36,8 @@ dependencies:
     # Use with the CupertinoIcons class for iOS style icons.
     cupertino_icons: ^1.0.2
     date_format: ^2.0.7
+    custom_radio_group_list: ^1.0.0
+    http:
 
 dev_dependencies:
     flutter_test:

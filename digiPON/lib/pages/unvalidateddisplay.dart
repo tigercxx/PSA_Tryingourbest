@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tryingoutbest/models/app.dart';
+import 'package:provider/provider.dart';
+import '../models/designatedofficermodel.dart';
+import 'package:custom_radio_group_list/custom_radio_group_list.dart';
 
 class UnvalidatedDisplay extends StatelessWidget {
   const UnvalidatedDisplay({super.key, required this.ponDisplay});
@@ -171,9 +174,82 @@ class UnvalidatedDisplay extends StatelessWidget {
               child: const Text('Validate'),
               onPressed: () {
                 // PUT data and return to page once successful
+                showDialog(
+                    context: context,
+                    builder: ((context) => _buildPopupDialog(context)));
               },
             )),
       ]),
     );
   }
+}
+
+Widget _buildPopupDialog(BuildContext context) {
+  var designatedmodel = context.read<DesignatedOfficerModel>();
+  designatedmodel.updateavailableCSOList();
+  designatedmodel.updateStringList();
+  return AlertDialog(
+    title: const Text('Confirm Validation'),
+    content: Container(
+      height: 400,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text("ePON will be passed on to selected Countersigning Officer"),
+          Container(child: Consumer<DesignatedOfficerModel>(
+            builder: (context, value, child) {
+              print(designatedmodel.dropdownValue);
+              print(designatedmodel.availableCSOList.first.username);
+              print(designatedmodel.availableCSOList.length);
+              print(designatedmodel.availableCSOStringList.first);
+              print(designatedmodel.availableCSOStringList.length);
+              return DropdownButton<String>(
+                value: designatedmodel.dropdownValue,
+                icon: const Icon(Icons.arrow_downward),
+                elevation: 16,
+                style: const TextStyle(color: Colors.black, fontSize: 18),
+                underline: Container(
+                  height: 2,
+                  color: Colors.black,
+                ),
+                onChanged: (String? value) {
+                  // This is called when the user selects an item.
+                  designatedmodel.setDropdownValue = value!;
+                },
+                items: designatedmodel.availableCSOStringList
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              );
+            },
+          ))
+        ],
+      ),
+    ),
+    actions: <Widget>[
+      ElevatedButton(
+          style: ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(Color(0xFF129793))),
+          onPressed: () {
+            // put the serial number, cso_id and time authorised
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+          child: Text("Confirm")),
+      ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor:
+                MaterialStateProperty.all<Color>(Color(0xFFFF7260))),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        child: const Text('Close'),
+      ),
+    ],
+  );
 }
