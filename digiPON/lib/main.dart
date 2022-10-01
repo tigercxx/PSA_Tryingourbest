@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:tryingoutbest/pages/loginpage.dart';
 import '/models/app.dart';
 import '/models/requestcsomodel.dart';
+import 'models/aetosmodel.dart';
+import 'models/designatedofficermodel.dart';
 import 'pages/requestercsopage.dart';
 
 void main() {
@@ -10,6 +12,8 @@ void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => App(0)),
     ChangeNotifierProvider(create: (context) => RequestCSOModel()),
+    ChangeNotifierProvider(create: (context) => DesignatedOfficerModel()),
+    ChangeNotifierProvider(create: (context) => AETOSModel())
   ], child: const MyApp()));
 }
 
