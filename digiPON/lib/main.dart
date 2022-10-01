@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tryingoutbest/pages/loginpage.dart';
 import '/models/app.dart';
+import '/models/requestcsomodel.dart';
 import 'pages/requestercsopage.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider(
-      create: (context) => App(''), child: const MyApp()));
+  Provider.debugCheckInvalidValueType = null;
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => App(0)),
+    ChangeNotifierProvider(create: (context) => RequestCSOModel()),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

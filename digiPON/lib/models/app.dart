@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 
 class App extends ChangeNotifier {
-  String keyword;
+  // String keyword;
+  int user_id;
 
-  set setKeyword(String value) {
-    keyword = value;
-    notifyListeners();
+  // set setKeyword(String value) {
+  //   keyword = value;
+  //   notifyListeners();
+  // }
+
+  App(this.user_id);
+
+  set setUserID(int id) {
+    user_id = id;
   }
-
-  App(this.keyword);
 }
 
 class PON {
@@ -24,7 +29,7 @@ class PON {
   String description;
 
 //State
-  bool validated;
+  bool? validated;
   DateTime time_validated;
   bool authorised;
   DateTime time_authorised;

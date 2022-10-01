@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tryingoutbest/main.dart';
+import '../models/requestcsomodel.dart';
 import 'package:tryingoutbest/widgets/request_form.dart';
-
 import '../widgets/current_requests.dart';
 import '../widgets/task_list.dart';
+import 'package:provider/provider.dart';
 
 class RequesterCSOPage extends StatefulWidget {
   const RequesterCSOPage({super.key, required this.index});
@@ -22,8 +23,11 @@ class _RequesterCSOPageState extends State<RequesterCSOPage> {
     });
   }
 
+  var requestmodel = RequestCSOModel();
+
   @override
   Widget build(BuildContext context) {
+    var requestCSOModel = context.watch<RequestCSOModel>();
     return Material(
       child: Container(
         child: Column(children: [
@@ -151,8 +155,11 @@ class _RequesterCSOPageState extends State<RequesterCSOPage> {
           toggleindex == 1
               ? RequestForm()
               : toggleindex == 2
-                  ? TaskList()
-                  : CurrentRequests(),
+                  ? Expanded(
+                      child: TaskList(
+                      requestModel: requestCSOModel,
+                    ))
+                  : Expanded(child: CurrentRequests()),
         ]),
       ),
     );
