@@ -27,8 +27,8 @@ class _RequesterCSOPageState extends State<RequesterCSOPage> {
   Widget build(BuildContext context) {
     var requestCSOModel = context.watch<RequestCSOModel>();
     // print(requestCSOModel.authorised);
-    return Material(
-      child: Consumer<RequestCSOModel>(
+    return Scaffold(
+      body: Consumer<RequestCSOModel>(
         builder: (context, value, child) {
           if (requestCSOModel.authorised == 1) {
             Future<Null>.delayed(Duration.zero, () {
@@ -37,7 +37,7 @@ class _RequesterCSOPageState extends State<RequesterCSOPage> {
             requestCSOModel.authorised = 0;
           }
           return Scaffold(
-            body: Container(
+            body: SingleChildScrollView(
               child: Column(children: [
                 Container(
                   height: 200,
@@ -169,6 +169,9 @@ class _RequesterCSOPageState extends State<RequesterCSOPage> {
                     : toggleindex == 2
                         ? Expanded(child: TaskList())
                         : Expanded(child: CurrentRequests()),
+                // Container(
+                //   height: 50,
+                // )
               ]),
             ),
           );
