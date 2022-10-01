@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:tryingoutbest/pages/taskdisplay.dart';
 
 class TaskList extends StatelessWidget {
-  TaskList({super.key, required RequestCSOModel requestModel});
+  TaskList({super.key});
 
   @override
   Widget build(BuildContext context) {

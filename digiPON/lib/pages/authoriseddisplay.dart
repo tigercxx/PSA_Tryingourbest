@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tryingoutbest/models/aetosmodel.dart';
 import 'package:tryingoutbest/models/app.dart';
+import 'package:provider/provider.dart';
 
 class AuthorisedDisplay extends StatelessWidget {
   const AuthorisedDisplay({super.key, required this.ponDisplay});
@@ -195,6 +197,7 @@ class AuthorisedDisplay extends StatelessWidget {
 }
 
 Widget _buildPopupDialog(BuildContext context) {
+  var aetosmodel = context.read<AETOSModel>();
   return AlertDialog(
     title: const Text('Confirm Verification'),
     content: Column(
@@ -211,7 +214,9 @@ Widget _buildPopupDialog(BuildContext context) {
                   MaterialStateProperty.all<Color>(Color(0xFF129793))),
           onPressed: () {
             // put the serial number, cso_id and time authorised
-            Navigator.of(context).pop();
+            aetosmodel.setConfirmation = 1;
+            Navigator.pop(context);
+            Navigator.pop(context);
           },
           child: Text("Confirm")),
       ElevatedButton(

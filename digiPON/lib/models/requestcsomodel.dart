@@ -5,6 +5,13 @@ import 'app.dart';
 class RequestCSOModel extends ChangeNotifier {
   List<PON> taskList = [];
   List<PON> currentRequests = [];
+  int authorised = 0;
+
+  set setConfirmation(int num) {
+    authorised = num;
+    notifyListeners();
+  }
+
   // function to update current requests and task list and notify listeners.
   void updateTaskList() {
     for (int i = 1; i < PONData.length; i++) {

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tryingoutbest/models/app.dart';
+import 'package:tryingoutbest/pages/requestercsopage.dart';
+import 'package:provider/provider.dart';
+
+import '../models/requestcsomodel.dart';
 
 class TaskDisplay extends StatelessWidget {
   const TaskDisplay({super.key, required this.ponDisplay});
@@ -182,6 +186,7 @@ class TaskDisplay extends StatelessWidget {
 }
 
 Widget _buildPopupDialog(BuildContext context) {
+  var requestmodel = context.read<RequestCSOModel>();
   return AlertDialog(
     title: const Text('Confirm Authorisation'),
     content: Column(
@@ -198,7 +203,9 @@ Widget _buildPopupDialog(BuildContext context) {
                   MaterialStateProperty.all<Color>(Color(0xFF129793))),
           onPressed: () {
             // put the serial number, cso_id and time authorised
-            Navigator.of(context).pop();
+            requestmodel.setConfirmation = 1;
+            Navigator.pop(context);
+            Navigator.pop(context);
           },
           child: Text("Confirm")),
       ElevatedButton(
