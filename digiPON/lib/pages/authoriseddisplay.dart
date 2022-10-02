@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:tryingoutbest/models/aetosmodel.dart';
 import 'package:tryingoutbest/models/app.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 class AuthorisedDisplay extends StatelessWidget {
   const AuthorisedDisplay({super.key, required this.ponDisplay});
@@ -9,6 +12,8 @@ class AuthorisedDisplay extends StatelessWidget {
   final PON ponDisplay;
   @override
   Widget build(BuildContext context) {
+    var aetosmodel = context.read<AETOSModel>();
+    aetosmodel.setTaskID = ponDisplay.serialnumber;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -198,6 +203,8 @@ class AuthorisedDisplay extends StatelessWidget {
 
 Widget _buildPopupDialog(BuildContext context) {
   var aetosmodel = context.read<AETOSModel>();
+  var app = context.read<App>();
+
   return AlertDialog(
     title: const Text('Confirm Verification'),
     content: Column(
@@ -212,11 +219,16 @@ Widget _buildPopupDialog(BuildContext context) {
           style: ButtonStyle(
               backgroundColor:
                   MaterialStateProperty.all<Color>(Color(0xFF129793))),
-          onPressed: () {
+          onPressed: () async {
             // put the serial number, cso_id and time authorised
-            aetosmodel.setConfirmation = 1;
-            Navigator.pop(context);
-            Navigator.pop(context);
+            final result =
+                await authorisePON(aetosmodel.task_id, app.user_id.toString());
+            print(result.body);
+            if (result.statusCode == 200) {
+              aetosmodel.setConfirmation = 1;
+              Navigator.pop(context);
+              Navigator.pop(context);
+            }
           },
           child: Text("Confirm")),
       ElevatedButton(
@@ -230,4 +242,21 @@ Widget _buildPopupDialog(BuildContext context) {
       ),
     ],
   );
+}
+
+Future<Response> authorisePON(String task_id, String user_id) async {
+  String url =
+      'https://tryingoutbest.herokuapp.com/api/verifyTask/$task_id/$user_id';
+  var response = await http.put(Uri.parse(url), headers: {
+    "content-type": "application/json",
+    "accept": "application/json",
+  });
+  print("response for validate");
+  print(response.body);
+  print(response.statusCode);
+  if (response.statusCode == 200) {
+    return response;
+  } else {
+    return Response('', 500);
+  }
 }

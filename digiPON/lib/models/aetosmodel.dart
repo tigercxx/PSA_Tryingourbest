@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:tryingoutbest/widgets/task_list.dart';
 import 'app.dart';
+import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class AETOSModel extends ChangeNotifier {
   List<PON> authorisedList = [];
   int verified = 0;
+  String task_id = '0';
+
+  set setTaskID(String id) {
+    task_id = id;
+  }
 
   set setConfirmation(int num) {
     verified = num;
@@ -12,10 +20,24 @@ class AETOSModel extends ChangeNotifier {
   }
 
   // function to update current requests and task list and notify listeners.
-  void updateAuthorisedList() {
-    authorisedList = [];
-    for (int i = 1; i < PONData.length; i++) {
-      authorisedList.add(PONData[i]);
-    }
+  void updateAuthorisedList() async {
+    final result = await retrieveUnverifiedList();
+    authorisedList =
+        (jsonDecode(result.body) as List).map((i) => PON.fromJson(i)).toList();
+    notifyListeners();
+  }
+}
+
+Future<Response> retrieveUnverifiedList() async {
+  String url = 'https://tryingoutbest.herokuapp.com/api/unverified';
+  var response = await http.get(Uri.parse(url), headers: {
+    "content-type": "application/json",
+    "accept": "application/json",
+  });
+  print("response");
+  if (response.statusCode == 200) {
+    return response;
+  } else {
+    return Response('', 500);
   }
 }

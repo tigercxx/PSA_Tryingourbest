@@ -57,7 +57,7 @@ class AETOSPage extends StatelessWidget {
                       child: Scrollbar(
                           child: ListView(
                         children: [
-                          for (int index = 1;
+                          for (int index = 0;
                               index < aetosModel.authorisedList.length;
                               index++)
                             Card(
