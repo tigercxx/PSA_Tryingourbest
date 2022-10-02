@@ -25,8 +25,8 @@ class CurrentRequests extends StatelessWidget {
                 elevation: 5,
                 child: ListTile(
                   title: Text("PON ID"),
-                  subtitle: Text(
-                      requestCSOModel.currentRequests[index].serialnumber!),
+                  subtitle:
+                      Text(requestCSOModel.currentRequests[index].serialnumber),
                   trailing: Text(
                     requestCSOModel.currentRequests[index].authorised!
                         ? 'Authorised'

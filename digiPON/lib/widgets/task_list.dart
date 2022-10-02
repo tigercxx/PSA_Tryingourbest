@@ -43,7 +43,7 @@ class _TaskListState extends State<TaskList> {
                   child: ListTile(
                     title: Text("PON ID"),
                     subtitle:
-                        Text(requestCSOModel.taskList[index].serialnumber!),
+                        Text(requestCSOModel.taskList[index].serialnumber),
                     trailing: Text(
                       requestCSOModel.taskList[index].time_validated!,
                     ),
