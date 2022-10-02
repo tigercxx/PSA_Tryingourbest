@@ -67,7 +67,7 @@ class PON {
             : json['validatedBy']['id'].toString(),
         json['authorisedBy'] == null
             ? "0"
-            : json['authorisedBy']['id'].toString(),
+            : json['authorisedBy']['username'].toString(),
         json['verifiedBy'] == null ? "0" : json['verifiedBy']['id'].toString(),
         json['company_name'],
         json['vehicle_no'],

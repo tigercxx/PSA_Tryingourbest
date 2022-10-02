@@ -10,6 +10,8 @@ import 'requestcsomodel.dart';
 class DesignatedOfficerModel extends ChangeNotifier {
   List<PON> unvalidatedList = [];
   List<CSO> availableCSOList = [];
+  int designated = 0;
+
   String dropdownValue = '';
   String task_id = "0";
   String selected_cso = "1";
@@ -38,6 +40,11 @@ class DesignatedOfficerModel extends ChangeNotifier {
       availableCSOStringList.add(availableCSOList[i].username);
     }
     dropdownValue = availableCSOStringList.first;
+  }
+
+  set setConfirmation(int num) {
+    designated = num;
+    notifyListeners();
   }
 
   set setDropdownValue(String value) {

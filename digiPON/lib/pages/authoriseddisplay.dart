@@ -14,190 +14,201 @@ class AuthorisedDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     var aetosmodel = context.read<AETOSModel>();
     aetosmodel.setTaskID = ponDisplay.serialnumber;
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        toolbarHeight: 80,
-        actions: [
-          true // write logic for verification with blockchain
-              ? Container(
-                  padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                  child:
-                      Icon(Icons.verified_user_outlined, color: Colors.green))
-              : Container(
-                  padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                  child: Icon(
-                    Icons.not_interested,
-                    color: Colors.red,
-                  ))
-        ],
-        title: Text(
-          "DigiPON",
-          style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+    aetosmodel.checkOnBlockchain(ponDisplay.serialnumber);
+    return Consumer<AETOSModel>(builder: (context, value, child) {
+      return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          toolbarHeight: 80,
+          actions: [
+            aetosmodel
+                    .blockchain_checked // write logic for verification with blockchain
+                ? Container(
+                    padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                    child:
+                        Icon(Icons.verified_user_outlined, color: Colors.green))
+                : Container(
+                    padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                    child: Icon(
+                      Icons.not_interested,
+                      color: Colors.red,
+                    ))
+          ],
+          title: Text(
+            "DigiPON",
+            style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: Color(0xFFFAEDED),
+          foregroundColor: Colors.black,
         ),
-        backgroundColor: Color(0xFFFAEDED),
-        foregroundColor: Colors.black,
-      ),
-      body: Column(children: [
-        Container(
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-          child: Column(
-            children: [
-              Container(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                  width: MediaQuery.of(context).size.width - 50,
-                  child: Text(
-                    "Company Name:",
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 137, 137, 137)),
-                  )),
-              Container(
-                width: MediaQuery.of(context).size.width - 50,
-                child: Text(
-                  ponDisplay.company_name,
-                  style: TextStyle(fontSize: 18),
-                ),
+        body: SingleChildScrollView(
+          child: Column(children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: Column(
+                children: [
+                  Container(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      width: MediaQuery.of(context).size.width - 50,
+                      child: Text(
+                        "Company Name:",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(255, 137, 137, 137)),
+                      )),
+                  Container(
+                    width: MediaQuery.of(context).size.width - 50,
+                    child: Text(
+                      ponDisplay.company_name,
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-          child: Column(
-            children: [
-              Container(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                  width: MediaQuery.of(context).size.width - 50,
-                  child: Text(
-                    "Vehicle No.:",
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 137, 137, 137)),
-                  )),
-              Container(
-                width: MediaQuery.of(context).size.width - 50,
-                child: Text(
-                  ponDisplay.vehicle_no,
-                  style: TextStyle(fontSize: 18),
-                ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: Column(
+                children: [
+                  Container(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      width: MediaQuery.of(context).size.width - 50,
+                      child: Text(
+                        "Vehicle No.:",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(255, 137, 137, 137)),
+                      )),
+                  Container(
+                    width: MediaQuery.of(context).size.width - 50,
+                    child: Text(
+                      ponDisplay.vehicle_no,
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-          child: Column(
-            children: [
-              Container(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                  width: MediaQuery.of(context).size.width - 50,
-                  child: Text(
-                    "Driver Name:",
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 137, 137, 137)),
-                  )),
-              Container(
-                width: MediaQuery.of(context).size.width - 50,
-                child: Text(
-                  ponDisplay.driver_name,
-                  style: TextStyle(fontSize: 18),
-                ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: Column(
+                children: [
+                  Container(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      width: MediaQuery.of(context).size.width - 50,
+                      child: Text(
+                        "Driver Name:",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(255, 137, 137, 137)),
+                      )),
+                  Container(
+                    width: MediaQuery.of(context).size.width - 50,
+                    child: Text(
+                      ponDisplay.driver_name,
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-          child: Column(
-            children: [
-              Container(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                  width: MediaQuery.of(context).size.width - 50,
-                  child: Text(
-                    "Driver's PSA Pass no.:",
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 137, 137, 137)),
-                  )),
-              Container(
-                width: MediaQuery.of(context).size.width - 50,
-                child: Text(
-                  ponDisplay.driver_psa_pass_no,
-                  style: TextStyle(fontSize: 18),
-                ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: Column(
+                children: [
+                  Container(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      width: MediaQuery.of(context).size.width - 50,
+                      child: Text(
+                        "Driver's PSA Pass no.:",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(255, 137, 137, 137)),
+                      )),
+                  Container(
+                    width: MediaQuery.of(context).size.width - 50,
+                    child: Text(
+                      ponDisplay.driver_psa_pass_no,
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-          child: Column(
-            children: [
-              Container(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                  width: MediaQuery.of(context).size.width - 50,
-                  child: Text(
-                    "Description:",
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 137, 137, 137)),
-                  )),
-              Container(
-                width: MediaQuery.of(context).size.width - 50,
-                child: Text(
-                  ponDisplay.description,
-                  style: TextStyle(fontSize: 18),
-                ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: Column(
+                children: [
+                  Container(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      width: MediaQuery.of(context).size.width - 50,
+                      child: Text(
+                        "Description:",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(255, 137, 137, 137)),
+                      )),
+                  Container(
+                    width: MediaQuery.of(context).size.width - 50,
+                    child: Text(
+                      ponDisplay.description,
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: Column(
+                children: [
+                  Container(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      width: MediaQuery.of(context).size.width - 50,
+                      child: Text(
+                        "Attachments:",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(255, 137, 137, 137)),
+                      )),
+                  Container(
+                      width: MediaQuery.of(context).size.width - 50,
+                      child: (ponDisplay.attachments != 'attachments')
+                          ? Image.network(ponDisplay.attachments)
+                          : Icon(Icons.image)),
+                ],
+              ),
+            ),
+            Container(
+              height: 30,
+            ),
+            Container(
+                height: 50,
+                width: 150,
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Color(0xFF129793)),
+                  child: const Text('Validate'),
+                  onPressed: () {
+                    // PUT data and return to page once successful
+                    showDialog(
+                        context: context,
+                        builder: ((context) => _buildPopupDialog(context)));
+                  },
+                )),
+            Container(
+              height: 20,
+            )
+          ]),
         ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-          child: Column(
-            children: [
-              Container(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                  width: MediaQuery.of(context).size.width - 50,
-                  child: Text(
-                    "Attachments:",
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 137, 137, 137)),
-                  )),
-              Container(
-                  width: MediaQuery.of(context).size.width - 50,
-                  child: Icon(Icons.image)),
-            ],
-          ),
-        ),
-        Container(
-          height: 30,
-        ),
-        Container(
-            height: 50,
-            width: 150,
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: Color(0xFF129793)),
-              child: const Text('Validate'),
-              onPressed: () {
-                // PUT data and return to page once successful
-                showDialog(
-                    context: context,
-                    builder: ((context) => _buildPopupDialog(context)));
-              },
-            )),
-      ]),
-    );
+      );
+    });
   }
 }
 
@@ -226,6 +237,7 @@ Widget _buildPopupDialog(BuildContext context) {
             print(result.body);
             if (result.statusCode == 200) {
               aetosmodel.setConfirmation = 1;
+              aetosmodel.updateAuthorisedList();
               Navigator.pop(context);
               Navigator.pop(context);
             }

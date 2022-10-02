@@ -9,6 +9,24 @@ class AETOSModel extends ChangeNotifier {
   List<PON> authorisedList = [];
   int verified = 0;
   String task_id = '0';
+  bool blockchain_checked = false;
+
+  Future<void> checkOnBlockchain(String task_id) async {
+    blockchain_checked = false;
+    String url =
+        'https://tryingoutbest.herokuapp.com/api/checkBlockchain/$task_id';
+    var response = await http.get(Uri.parse(url), headers: {
+      "content-type": "application/json",
+      "accept": "application/json",
+    });
+    print("blockchain response");
+    print(response.body);
+    if (response.statusCode == 200) {
+      print("blockchian true");
+      blockchain_checked = true;
+    }
+    notifyListeners();
+  }
 
   set setTaskID(String id) {
     task_id = id;

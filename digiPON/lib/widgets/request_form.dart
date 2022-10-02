@@ -19,6 +19,7 @@ class RequestForm extends StatelessWidget {
     TextEditingController driverNameController = TextEditingController();
     TextEditingController driverPSAPassNoController = TextEditingController();
     TextEditingController descriptionController = TextEditingController();
+    TextEditingController attachmentController = TextEditingController();
     var deviceheight = MediaQuery.of(context).size.height;
     print(MediaQuery.of(context).viewInsets.bottom);
     return Container(
@@ -126,7 +127,7 @@ class RequestForm extends StatelessWidget {
                   height: 50,
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: TextField(
-                    controller: descriptionController,
+                    controller: attachmentController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       filled: true,

@@ -189,7 +189,7 @@ void _showToast(BuildContext context) {
   scaffold.showSnackBar(
     SnackBar(
       content: const Text(
-        'Authorised',
+        'Authorised and uploaded to Algorand Blockchain',
         style: TextStyle(color: Colors.green),
       ),
     ),

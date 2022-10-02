@@ -68,7 +68,8 @@ class AETOSPage extends StatelessWidget {
                                     .authorisedList[index].requester_id!),
                                 trailing: Text(
                                   aetosModel
-                                      .authorisedList[index].time_validated!,
+                                      .authorisedList[index].time_validated!
+                                      .substring(3, 20),
                                 ),
                                 onTap: () {
                                   Navigator.push(
@@ -100,7 +101,7 @@ void _showToast(BuildContext context) {
   scaffold.showSnackBar(
     SnackBar(
       content: const Text(
-        'Verified',
+        'Verified and Uploaded to Algorand Blockchain',
         style: TextStyle(color: Colors.green),
       ),
     ),

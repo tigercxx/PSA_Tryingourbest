@@ -28,7 +28,11 @@ class CurrentRequests extends StatelessWidget {
                   subtitle: Text(
                       requestCSOModel.currentRequests[index].requester_id!),
                   trailing: Text(
-                    requestCSOModel.currentRequests[index].time_validated!,
+                    requestCSOModel.currentRequests[index].authorised!
+                        ? 'Authorised'
+                        : requestCSOModel.currentRequests[index].validated!
+                            ? 'Validated: CSO is ${requestCSOModel.currentRequests[index].cso_id}'
+                            : 'Unvalidated',
                   ),
                   onTap: () {},
                 ),
