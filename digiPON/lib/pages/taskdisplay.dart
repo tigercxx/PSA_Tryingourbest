@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:tryingoutbest/models/app.dart';
 import 'package:tryingoutbest/pages/requestercsopage.dart';
 import 'package:provider/provider.dart';
-
+import 'package:http/http.dart' as http;
 import '../models/requestcsomodel.dart';
 
 class TaskDisplay extends StatelessWidget {
@@ -11,6 +12,8 @@ class TaskDisplay extends StatelessWidget {
   final PON ponDisplay;
   @override
   Widget build(BuildContext context) {
+    var requestmodel = context.read<RequestCSOModel>();
+    requestmodel.setTaskID = ponDisplay.serialnumber;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -201,11 +204,17 @@ Widget _buildPopupDialog(BuildContext context) {
           style: ButtonStyle(
               backgroundColor:
                   MaterialStateProperty.all<Color>(Color(0xFF129793))),
-          onPressed: () {
+          onPressed: () async {
             // put the serial number, cso_id and time authorised
-            requestmodel.setConfirmation = 1;
-            Navigator.pop(context);
-            Navigator.pop(context);
+            final result = await authorisePON(
+              requestmodel.task_id,
+            );
+            print(result.body);
+            if (result.statusCode == 200) {
+              requestmodel.setConfirmation = 1;
+              Navigator.pop(context);
+              Navigator.pop(context);
+            }
           },
           child: Text("Confirm")),
       ElevatedButton(
@@ -219,4 +228,21 @@ Widget _buildPopupDialog(BuildContext context) {
       ),
     ],
   );
+}
+
+Future<Response> authorisePON(String task_id) async {
+  String url =
+      'https://tryingoutbest.herokuapp.com/api/authoriseRequest/$task_id';
+  var response = await http.put(Uri.parse(url), headers: {
+    "content-type": "application/json",
+    "accept": "application/json",
+  });
+  print("response for validate");
+  print(response.body);
+  print(response.statusCode);
+  if (response.statusCode == 200) {
+    return response;
+  } else {
+    return Response('', 500);
+  }
 }

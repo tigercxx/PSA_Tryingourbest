@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:tryingoutbest/models/app.dart';
 import 'package:provider/provider.dart';
 import '../models/designatedofficermodel.dart';
 import 'package:custom_radio_group_list/custom_radio_group_list.dart';
+import 'package:http/http.dart' as http;
 
 class UnvalidatedDisplay extends StatelessWidget {
   const UnvalidatedDisplay({super.key, required this.ponDisplay});
@@ -10,6 +12,11 @@ class UnvalidatedDisplay extends StatelessWidget {
   final PON ponDisplay;
   @override
   Widget build(BuildContext context) {
+    var designatedmodel = context.read<DesignatedOfficerModel>();
+    var app = context.read<App>();
+    designatedmodel.setTaskId = ponDisplay.serialnumber;
+    designatedmodel.updateavailableCSOList(
+        app.user_id.toString(), ponDisplay.serialnumber.toString());
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -174,6 +181,8 @@ class UnvalidatedDisplay extends StatelessWidget {
               child: const Text('Validate'),
               onPressed: () {
                 // PUT data and return to page once successful
+                print(designatedmodel.availableCSOStringList.first);
+                print(ponDisplay.serialnumber);
                 showDialog(
                     context: context,
                     builder: ((context) => _buildPopupDialog(context)));
@@ -186,8 +195,8 @@ class UnvalidatedDisplay extends StatelessWidget {
 
 Widget _buildPopupDialog(BuildContext context) {
   var designatedmodel = context.read<DesignatedOfficerModel>();
-  designatedmodel.updateavailableCSOList();
-  designatedmodel.updateStringList();
+  var app = context.read<App>();
+
   return AlertDialog(
     title: const Text('Confirm Validation'),
     content: Container(
@@ -199,11 +208,6 @@ Widget _buildPopupDialog(BuildContext context) {
           Text("ePON will be passed on to selected Countersigning Officer"),
           Container(child: Consumer<DesignatedOfficerModel>(
             builder: (context, value, child) {
-              print(designatedmodel.dropdownValue);
-              print(designatedmodel.availableCSOList.first.username);
-              print(designatedmodel.availableCSOList.length);
-              print(designatedmodel.availableCSOStringList.first);
-              print(designatedmodel.availableCSOStringList.length);
               return DropdownButton<String>(
                 value: designatedmodel.dropdownValue,
                 icon: const Icon(Icons.arrow_downward),
@@ -216,6 +220,7 @@ Widget _buildPopupDialog(BuildContext context) {
                 onChanged: (String? value) {
                   // This is called when the user selects an item.
                   designatedmodel.setDropdownValue = value!;
+                  print(designatedmodel.dropdownValue);
                 },
                 items: designatedmodel.availableCSOStringList
                     .map<DropdownMenuItem<String>>((String value) {
@@ -235,10 +240,15 @@ Widget _buildPopupDialog(BuildContext context) {
           style: ButtonStyle(
               backgroundColor:
                   MaterialStateProperty.all<Color>(Color(0xFF129793))),
-          onPressed: () {
-            // put the serial number, cso_id and time authorised
-            Navigator.pop(context);
-            Navigator.pop(context);
+          onPressed: () async {
+            final result = await validatePON(designatedmodel.task_id,
+                designatedmodel.selected_cso, app.user_id.toString());
+            print(result.body);
+            if (result.statusCode == 200) {
+              print("Successful validation");
+              Navigator.pop(context);
+              Navigator.pop(context);
+            }
           },
           child: Text("Confirm")),
       ElevatedButton(
@@ -252,4 +262,19 @@ Widget _buildPopupDialog(BuildContext context) {
       ),
     ],
   );
+}
+
+Future<Response> validatePON(
+    String task_id, String selected_cso, String user_id) async {
+  String url =
+      'https://tryingoutbest.herokuapp.com/api/validateRequest/$task_id/$selected_cso/$user_id';
+  var response = await http.put(Uri.parse(url), headers: {
+    "content-type": "application/json",
+    "accept": "application/json",
+  });
+  if (response.statusCode == 200) {
+    return response;
+  } else {
+    return Response('', 500);
+  }
 }

@@ -18,10 +18,10 @@ class App extends ChangeNotifier {
 
 class PON {
   String serialnumber;
-  String requester_id;
-  String designated_id;
-  String cso_id;
-  String aetos_id;
+  String? requester_id;
+  String? designated_id;
+  String? cso_id;
+  String? aetos_id;
 
 //Required Info
   String company_name;
@@ -29,14 +29,15 @@ class PON {
   String driver_name;
   String driver_psa_pass_no;
   String description;
+  String attachments;
 
 //State
   bool? validated;
-  DateTime time_validated;
-  bool authorised;
-  DateTime time_authorised;
-  bool verified;
-  DateTime time_verified;
+  String? time_validated;
+  bool? authorised;
+  String? time_authorised;
+  bool? verified;
+  String? time_verified;
 
   PON(
       this.serialnumber,
@@ -49,12 +50,38 @@ class PON {
       this.driver_name,
       this.driver_psa_pass_no,
       this.description,
-      this.validated,
+      this.attachments,
+      [this.validated,
       this.time_validated,
       this.authorised,
       this.time_authorised,
       this.verified,
-      this.time_verified);
+      this.time_verified]);
+
+  factory PON.fromJson(Map<String, dynamic> json) {
+    return PON(
+        json['id'].toString(),
+        json['createdBy'] == null ? "0" : json['createdBy']['id'].toString(),
+        json['validatedBy'] == null
+            ? "0"
+            : json['validatedBy']['id'].toString(),
+        json['authorisedBy'] == null
+            ? "0"
+            : json['authorisedBy']['id'].toString(),
+        json['verifiedBy'] == null ? "0" : json['verifiedBy']['id'].toString(),
+        json['company_name'],
+        json['vehicle_no'],
+        json['driver_name'],
+        json['driver_psa_pass_no'],
+        json['description'],
+        json['attachments'],
+        json['validated'],
+        json['time_validated'] ?? "0",
+        json['authorised'],
+        json['time_authorised'] ?? "0",
+        json['verified'],
+        json['time_verified'] ?? "0");
+  }
 }
 
 List<PON> PONData = [
@@ -69,95 +96,106 @@ List<PON> PONData = [
       'Harry',
       '123456789',
       '1 bag of peanuts',
+      'attachment',
       true,
-      DateTime(2022, 9, 7, 17, 30),
+      "22 Sep 2022 19:50",
       false,
-      DateTime(2022, 9, 7, 17, 30),
+      "22 Sep 2022 19:50",
       false,
-      DateTime(2022, 9, 7, 17, 30)),
+      "22 Sep 2022 19:50"),
   PON(
-      '2',
-      '1',
-      '2',
-      '3',
-      '4',
-      'McDonalds',
-      'SMU5555',
-      'Harry',
-      '123456789',
-      '1 bag of peanuts',
-      true,
-      DateTime(2022, 9, 7, 17, 30),
-      false,
-      DateTime(2022, 9, 7, 17, 30),
-      false,
-      DateTime(2022, 9, 7, 17, 30)),
+    '2',
+    '1',
+    '2',
+    '3',
+    '4',
+    'McDonalds',
+    'SMU5555',
+    'Harry',
+    '123456789',
+    '1 bag of peanuts',
+    'attachment',
+    true,
+    "22 Sep 2022 19:50",
+    false,
+    "22 Sep 2022 19:50",
+    false,
+    "22 Sep 2022 19:50",
+  ),
   PON(
-      '3',
-      '1',
-      '2',
-      '3',
-      '4',
-      'McDonalds',
-      'SMU5555',
-      'Harry',
-      '123456789',
-      '1 bag of peanuts',
-      true,
-      DateTime(2022, 9, 7, 17, 30),
-      false,
-      DateTime(2022, 9, 7, 17, 30),
-      false,
-      DateTime(2022, 9, 7, 17, 30)),
+    '3',
+    '1',
+    '2',
+    '3',
+    '4',
+    'McDonalds',
+    'SMU5555',
+    'Harry',
+    '123456789',
+    '1 bag of peanuts',
+    'attachment',
+    true,
+    "22 Sep 2022 19:50",
+    false,
+    "22 Sep 2022 19:50",
+    false,
+    "22 Sep 2022 19:50",
+  ),
   PON(
-      '4',
-      '1',
-      '2',
-      '3',
-      '4',
-      'McDonalds',
-      'SMU5555',
-      'Harry',
-      '123456789',
-      '1 bag of peanuts',
-      true,
-      DateTime(2022, 9, 7, 17, 30),
-      false,
-      DateTime(2022, 9, 7, 17, 30),
-      false,
-      DateTime(2022, 9, 7, 17, 30)),
+    '4',
+    '1',
+    '2',
+    '3',
+    '4',
+    'McDonalds',
+    'SMU5555',
+    'Harry',
+    '123456789',
+    '1 bag of peanuts',
+    'attachment',
+    true,
+    "22 Sep 2022 19:50",
+    false,
+    "22 Sep 2022 19:50",
+    false,
+    "22 Sep 2022 19:50",
+  ),
   PON(
-      '5',
-      '1',
-      '2',
-      '3',
-      '4',
-      'McDonalds',
-      'SMU5555',
-      'Harry',
-      '123456789',
-      '1 bag of peanuts',
-      true,
-      DateTime(2022, 9, 7, 17, 30),
-      false,
-      DateTime(2022, 9, 7, 17, 30),
-      false,
-      DateTime(2022, 9, 7, 17, 30)),
+    '5',
+    '1',
+    '2',
+    '3',
+    '4',
+    'McDonalds',
+    'SMU5555',
+    'Harry',
+    '123456789',
+    '1 bag of peanuts',
+    'attachment',
+    true,
+    "22 Sep 2022 19:50",
+    false,
+    "22 Sep 2022 19:50",
+    false,
+    "22 Sep 2022 19:50",
+  ),
   PON(
-      '6',
-      '1',
-      '2',
-      '3',
-      '4',
-      'McDonalds',
-      'SMU5555',
-      'Harry',
-      '123456789',
-      '1 bag of peanuts',
-      true,
-      DateTime(2022, 9, 7, 17, 30),
-      false,
-      DateTime(2022, 9, 7, 17, 30),
-      false,
-      DateTime(2022, 9, 7, 17, 30)),
+    '6',
+    '1',
+    '2',
+    '3',
+    '4',
+    'McDonalds',
+    'SMU5555',
+    'Harry',
+    '123456789',
+    '1 bag of peanuts',
+    'attachment',
+    true,
+    "22 Sep 2022 19:50",
+    false,
+    "22 Sep 2022 19:50",
+    false,
+    "22 Sep 2022 19:50",
+  ),
 ];

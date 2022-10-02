@@ -10,22 +10,26 @@ class CurrentRequests extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var requestCSOModel = context.read<RequestCSOModel>();
-    requestCSOModel.updateTaskList();
+    var app = context.read<App>();
+    requestCSOModel.updateCurrentRequests(app.user_id.toString());
     return Consumer<RequestCSOModel>(builder: (context, value, child) {
       return SizedBox(
         height: MediaQuery.of(context).size.width - 200,
         child: Scrollbar(
             child: ListView(
           children: [
-            for (int index = 1; index < PONData.length; index++)
+            for (int index = 0;
+                index < requestCSOModel.currentRequests.length;
+                index++)
               Card(
                 elevation: 5,
                 child: ListTile(
                   title: Text("Requester ID"),
-                  subtitle: Text(requestCSOModel.taskList[index].requester_id),
-                  trailing: Text(formatDate(
-                      requestCSOModel.taskList[index].time_validated,
-                      [dd, '-', mm, '-', yyyy, ' ', HH, ':', mm])),
+                  subtitle: Text(
+                      requestCSOModel.currentRequests[index].requester_id!),
+                  trailing: Text(
+                    requestCSOModel.currentRequests[index].time_validated!,
+                  ),
                   onTap: () {},
                 ),
               )

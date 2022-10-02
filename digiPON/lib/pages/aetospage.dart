@@ -65,21 +65,11 @@ class AETOSPage extends StatelessWidget {
                               child: ListTile(
                                 title: Text("Requester ID"),
                                 subtitle: Text(aetosModel
-                                    .authorisedList[index].requester_id),
-                                trailing: Text(formatDate(
-                                    aetosModel
-                                        .authorisedList[index].time_validated,
-                                    [
-                                      dd,
-                                      '-',
-                                      mm,
-                                      '-',
-                                      yyyy,
-                                      ' ',
-                                      HH,
-                                      ':',
-                                      mm
-                                    ])),
+                                    .authorisedList[index].requester_id!),
+                                trailing: Text(
+                                  aetosModel
+                                      .authorisedList[index].time_validated!,
+                                ),
                                 onTap: () {
                                   Navigator.push(
                                     context,

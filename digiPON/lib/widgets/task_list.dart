@@ -5,13 +5,29 @@ import 'package:date_format/date_format.dart';
 import 'package:provider/provider.dart';
 import 'package:tryingoutbest/pages/taskdisplay.dart';
 
-class TaskList extends StatelessWidget {
+class TaskList extends StatefulWidget {
   TaskList({super.key});
 
   @override
+  State<TaskList> createState() => _TaskListState();
+}
+
+class _TaskListState extends State<TaskList> {
+  @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+  //     var app = context.read<App>();
+  //     var requestCSOModel = context.read<RequestCSOModel>();
+  //     requestCSOModel.updateTaskList(app.user_id.toString());
+  //   });
+  // }
+
+  @override
   Widget build(BuildContext context) {
+    var app = context.read<App>();
     var requestCSOModel = context.read<RequestCSOModel>();
-    requestCSOModel.updateTaskList();
+    requestCSOModel.updateTaskList(app.user_id.toString());
     return Consumer<RequestCSOModel>(
       builder: (context, value, child) {
         return SizedBox(
@@ -19,16 +35,18 @@ class TaskList extends StatelessWidget {
           child: Scrollbar(
               child: ListView(
             children: [
-              for (int index = 1; index < PONData.length; index++)
+              for (int index = 0;
+                  index < requestCSOModel.taskList.length;
+                  index++)
                 Card(
                   elevation: 5,
                   child: ListTile(
                     title: Text("Requester ID"),
                     subtitle:
-                        Text(requestCSOModel.taskList[index].requester_id),
-                    trailing: Text(formatDate(
-                        requestCSOModel.taskList[index].time_validated,
-                        [dd, '-', mm, '-', yyyy, ' ', HH, ':', mm])),
+                        Text(requestCSOModel.taskList[index].requester_id!),
+                    trailing: Text(
+                      requestCSOModel.taskList[index].time_validated!,
+                    ),
                     onTap: () {
                       Navigator.push(
                         context,

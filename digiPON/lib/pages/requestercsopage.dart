@@ -38,141 +38,144 @@ class _RequesterCSOPageState extends State<RequesterCSOPage> {
           }
           return Scaffold(
             body: SingleChildScrollView(
-              child: Column(children: [
-                Container(
-                  height: 200,
-                  width: MediaQuery.of(context).size.width,
-                  color: Color(0xFFFAF6ED),
-                  child: Stack(children: [
-                    Positioned(
-                      left: 330,
-                      top: 10,
-                      child: IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            Navigator.pop(context);
-                          },
-                          icon: Icon(
-                            Icons.logout_outlined,
-                            size: 40,
-                          )),
-                    ),
-                    Center(
-                        child: Text(
-                      "DigiPON",
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                    )),
-                    Positioned(
-                        top: 140,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          child: Wrap(
-                            alignment: WrapAlignment.spaceEvenly,
-                            children: <Widget>[
-                              InkWell(
-                                child: Container(
-                                  height: 40,
-                                  width: 100,
-                                  color: Colors.transparent,
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                child: Column(children: [
+                  Container(
+                    height: 200,
+                    width: MediaQuery.of(context).size.width,
+                    color: Color(0xFFFAF6ED),
+                    child: Stack(children: [
+                      Positioned(
+                        left: 330,
+                        top: 10,
+                        child: IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(
+                              Icons.logout_outlined,
+                              size: 40,
+                            )),
+                      ),
+                      Center(
+                          child: Text(
+                        "DigiPON",
+                        style: TextStyle(
+                            fontSize: 30, fontWeight: FontWeight.bold),
+                      )),
+                      Positioned(
+                          top: 140,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Wrap(
+                              alignment: WrapAlignment.spaceEvenly,
+                              children: <Widget>[
+                                InkWell(
                                   child: Container(
-                                    // padding: const EdgeInsets.only(left: 20, top: 2),
-                                    decoration: BoxDecoration(
-                                        color: toggleindex == 1
-                                            ? Color(0xFFD0D0D0)
-                                            : Colors.white,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5.0)),
-                                        border: Border.all(
-                                            color: Color(0xFF505050))),
-                                    child: Center(
-                                      child: Text(
-                                        "Request Form",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xFF505050)),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                onTap: () {
-                                  _onToggle(1);
-                                },
-                              ),
-                              InkWell(
-                                child: Container(
-                                  height: 40,
-                                  width: 100,
-                                  color: Colors.transparent,
-                                  child: Container(
-                                    // padding: const EdgeInsets.only(left: 20, top: 2),
-                                    decoration: BoxDecoration(
-                                        color: toggleindex == 2
-                                            ? Color(0xFFD0D0D0)
-                                            : Colors.white,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5.0)),
-                                        border: Border.all(
-                                            color: Color(0xFF505050))),
-                                    child: Center(
-                                      child: Text(
-                                        "Task List",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xFF505050)),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                onTap: () {
-                                  _onToggle(2);
-                                },
-                              ),
-                              InkWell(
-                                child: Container(
-                                  height: 40,
-                                  width: 100,
-                                  color: Colors.transparent,
-                                  child: Container(
-                                    // padding: const EdgeInsets.only(left: 20, top: 2),
-                                    decoration: BoxDecoration(
-                                        color: toggleindex == 3
-                                            ? Color(0xFFD0D0D0)
-                                            : Colors.white,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5.0)),
-                                        border: Border.all(
-                                            color: Color(0xFF505050))),
+                                    height: 40,
+                                    width: 100,
+                                    color: Colors.transparent,
                                     child: Container(
-                                      // margin: const EdgeInsets.only(left: 20),
-                                      child: Text(
-                                        "Current Requests",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xFF505050)),
-                                        textAlign: TextAlign.center,
+                                      // padding: const EdgeInsets.only(left: 20, top: 2),
+                                      decoration: BoxDecoration(
+                                          color: toggleindex == 1
+                                              ? Color(0xFFD0D0D0)
+                                              : Colors.white,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5.0)),
+                                          border: Border.all(
+                                              color: Color(0xFF505050))),
+                                      child: Center(
+                                        child: Text(
+                                          "Request Form",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xFF505050)),
+                                        ),
                                       ),
                                     ),
                                   ),
+                                  onTap: () {
+                                    _onToggle(1);
+                                  },
                                 ),
-                                onTap: () {
-                                  _onToggle(3);
-                                },
-                              ),
-                            ],
-                          ),
-                        ))
-                  ]),
-                ),
-                toggleindex == 1
-                    ? RequestForm()
-                    : toggleindex == 2
-                        ? Expanded(child: TaskList())
-                        : Expanded(child: CurrentRequests()),
-                // Container(
-                //   height: 50,
-                // )
-              ]),
+                                InkWell(
+                                  child: Container(
+                                    height: 40,
+                                    width: 100,
+                                    color: Colors.transparent,
+                                    child: Container(
+                                      // padding: const EdgeInsets.only(left: 20, top: 2),
+                                      decoration: BoxDecoration(
+                                          color: toggleindex == 2
+                                              ? Color(0xFFD0D0D0)
+                                              : Colors.white,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5.0)),
+                                          border: Border.all(
+                                              color: Color(0xFF505050))),
+                                      child: Center(
+                                        child: Text(
+                                          "Task List",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xFF505050)),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    _onToggle(2);
+                                  },
+                                ),
+                                InkWell(
+                                  child: Container(
+                                    height: 40,
+                                    width: 100,
+                                    color: Colors.transparent,
+                                    child: Container(
+                                      // padding: const EdgeInsets.only(left: 20, top: 2),
+                                      decoration: BoxDecoration(
+                                          color: toggleindex == 3
+                                              ? Color(0xFFD0D0D0)
+                                              : Colors.white,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5.0)),
+                                          border: Border.all(
+                                              color: Color(0xFF505050))),
+                                      child: Container(
+                                        // margin: const EdgeInsets.only(left: 20),
+                                        child: Text(
+                                          "Current Requests",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xFF505050)),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    _onToggle(3);
+                                  },
+                                ),
+                              ],
+                            ),
+                          ))
+                    ]),
+                  ),
+                  toggleindex == 1
+                      ? RequestForm()
+                      : toggleindex == 2
+                          ? Expanded(child: TaskList())
+                          : Expanded(child: CurrentRequests()),
+                  // Container(
+                  //   height: 50,
+                  // )
+                ]),
+              ),
             ),
           );
         },

@@ -4,13 +4,17 @@ import 'package:provider/provider.dart';
 import 'package:date_format/date_format.dart';
 import 'package:tryingoutbest/pages/unvalidateddisplay.dart';
 
+import '../models/app.dart';
+
 class DesignatedOfficerPage extends StatelessWidget {
   const DesignatedOfficerPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var app = context.read<App>();
+
     var designatedOfficerModel = context.read<DesignatedOfficerModel>();
-    designatedOfficerModel.updateUnvalidatedList();
+    designatedOfficerModel.updateUnvalidatedList(app.user_id.toString());
     return Material(
       child: Container(
         child: Column(children: [
@@ -46,7 +50,7 @@ class DesignatedOfficerPage extends StatelessWidget {
                 child: Scrollbar(
                     child: ListView(
                   children: [
-                    for (int index = 1;
+                    for (int index = 0;
                         index < designatedOfficerModel.unvalidatedList.length;
                         index++)
                       Card(
@@ -54,11 +58,11 @@ class DesignatedOfficerPage extends StatelessWidget {
                         child: ListTile(
                           title: Text("Requester ID"),
                           subtitle: Text(designatedOfficerModel
-                              .unvalidatedList[index].requester_id),
-                          trailing: Text(formatDate(
-                              designatedOfficerModel
-                                  .unvalidatedList[index].time_validated,
-                              [dd, '-', mm, '-', yyyy, ' ', HH, ':', mm])),
+                              .unvalidatedList[index].requester_id!),
+                          trailing: Text(
+                            designatedOfficerModel
+                                .unvalidatedList[index].time_validated!,
+                          ),
                           onTap: () {
                             Navigator.push(
                               context,
