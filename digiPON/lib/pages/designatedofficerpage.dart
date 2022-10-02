@@ -67,9 +67,9 @@ class DesignatedOfficerPage extends StatelessWidget {
                             Card(
                               elevation: 5,
                               child: ListTile(
-                                title: Text("Requester ID"),
+                                title: Text("PON ID"),
                                 subtitle: Text(designatedOfficerModel
-                                    .unvalidatedList[index].requester_id!),
+                                    .unvalidatedList[index].serialnumber),
                                 trailing: Text(
                                   designatedOfficerModel
                                       .unvalidatedList[index].time_validated!,
